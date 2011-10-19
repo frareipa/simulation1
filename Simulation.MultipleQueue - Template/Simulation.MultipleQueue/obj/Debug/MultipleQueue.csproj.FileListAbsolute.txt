@@ -1,0 +1,8 @@
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\ResolveAssemblyReference.cache
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.MultipleServerSimulation.resources
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.Properties.Resources.resources
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.csproj.GenerateResource.Cache
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\bin\Debug\MultipleQueue.exe
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\bin\Debug\MultipleQueue.pdb
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.exe
+E:\College\2011-2012 First Semester\Simulation and Modelling\Labs\Lab 2\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.pdb
