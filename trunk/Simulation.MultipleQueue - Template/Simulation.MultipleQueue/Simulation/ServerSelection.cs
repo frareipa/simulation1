@@ -88,6 +88,7 @@ namespace MultipleQueue.Simulation
                     }//end case Random
                     break;
             }//end swith
+            return 0;
                 //HighestPriority
                 //Random
                 //LowestUtilization
