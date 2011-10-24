@@ -120,10 +120,13 @@ namespace MultipleQueue.Simulation
         private void Initialize()
         {
             throw new NotImplementedException(@"Implement Initialize in Simulation\Model.cs");
-
+          //this.clock=  customerInterArrivalDistribution.GetValue(LCGRandomNumberGenerator.GetVariate());
             //initialize clock time
-
+            this.clock = 0;
             //Generate initial arrival Time
+            MultipleQueue.Entities.Customer c = GenerateCustomer();
+           // MultipleQueue.Entities.Customer c=new MultipleQueue.Entities.Customer(0,0);
+            eventsList.Add ( c,EventType.Arrival);            
             //1-generate the first event -> get next customer
             //2-add arrival event in the events list
         }
@@ -135,8 +138,10 @@ namespace MultipleQueue.Simulation
         private Entities.Customer GenerateCustomer()
         {
             throw new NotImplementedException(@"Implement GenerateCustomer in Simulation\Model.cs");
-
+          float inter_arrival=  customerInterArrivalDistribution.GetValue(LCGRandomNumberGenerator.GetVariate());
             //use LCGRandomNumberGenerator to generate inter-arrival time for the customer
+            MultipleQueue.Entities.Customer c=new MultipleQueue.Entities.Customer(inter_arrival,0);
+            return c;
             //return the new customer object
         }
 
@@ -144,11 +149,19 @@ namespace MultipleQueue.Simulation
         /// Arrives the customer.
         /// </summary>
         /// <param name="arrivingCustomer">The arriving customer.</param>
-        private void ArriveCustomer(Entities.Customer arrivingCustomer)
+        private void ArriveCustomer(Entities.Customer arrivingCustomer)                                    
         {
             throw new NotImplementedException(@"Implement ArriveCustomer in Simulation\Model.cs");
 
             //set clock
+            clock = arrivingCustomer.ArrivalTime;
+            MultipleQueue.Entities.Server c;
+            foreach c in servers
+            {
+                if(c.IsBusy==true)
+                {
+                }
+            }
             //select a server, if any are available
             //enter queue or assign to a server
             //schedule arrival of next customer
@@ -194,8 +207,13 @@ namespace MultipleQueue.Simulation
         public void Run()
         {
             throw new NotImplementedException(@"Implement Run in Simulation\Model.cs");
-
+            int numOfCustomer = 0;
             //initialize model
+            Initialize();
+            while (numOfCustomer < customerCountStoppingCondition)
+            {
+                CalculateSystemPerformance();
+            }
             //while the stopping condition is not reached yet, handle the next event in the events list
             //calculate the system performance
         }
@@ -208,6 +226,7 @@ namespace MultipleQueue.Simulation
             throw new NotImplementedException(@"Implement CalculateSystemPerformance in Simulation\Model.cs");
 
             //Calculate the value system performance measures
+           
         }
     }
 }
