@@ -17,3 +17,10 @@ D:\faculty\4th year\first term\simulation\Simulation.MultipleQueue - Template\Si
 D:\faculty\4th year\first term\simulation\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.MultipleServerSimulation.resources
 D:\faculty\4th year\first term\simulation\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.Properties.Resources.resources
 D:\faculty\4th year\first term\simulation\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.csproj.GenerateResource.Cache
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\bin\Debug\MultipleQueue.exe
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\bin\Debug\MultipleQueue.pdb
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.CustForm.resources
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.discreteDis.resources
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.exponDist.resources
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.serverForm.resources
+D:\faculty\4th year\first term\simulation\task1\simulation1\Simulation.MultipleQueue - Template\Simulation.MultipleQueue\obj\Debug\MultipleQueue.Server_n.resources
