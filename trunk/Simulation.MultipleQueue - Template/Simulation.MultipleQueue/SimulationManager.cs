@@ -19,8 +19,8 @@ namespace MultipleQueue
 
             //get all inputs from the user
             //create the model
-            model = new Model();
-             model.Run();
+            //model = new Model();
+            // model.Run();
             //start running the simulation
         }
 
