@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using MultipleQueue.Simulation;
 namespace MultipleQueue
 {
     class SimulationManager
@@ -19,6 +19,8 @@ namespace MultipleQueue
 
             //get all inputs from the user
             //create the model
+            model = new Model();
+             model.Run();
             //start running the simulation
         }
 
