@@ -13,7 +13,19 @@ namespace MultipleQueue
     {
         public MultipleServerSimulation()
         {
+            this.InitializeComponent();
+        }
 
+        private void btnCustomer_Click(object sender, EventArgs e)
+        {
+            CustForm cusF = new CustForm();
+            cusF.Show();
+        }
+
+        private void btnServers_Click(object sender, EventArgs e)
+        {
+            serverForm s = new serverForm();
+            s.Show();
         }
     }
 }

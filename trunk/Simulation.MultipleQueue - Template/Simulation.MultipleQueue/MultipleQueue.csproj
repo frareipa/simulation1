@@ -48,22 +48,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="intr\CustForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="intr\CustForm.designer.cs">
+      <DependentUpon>CustForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Distributions\DiscreteDistribution.cs" />
     <Compile Include="Distributions\ExponentialDistribution.cs" />
     <Compile Include="Distributions\IDistribution.cs" />
     <Compile Include="Distributions\UniformDistribution.cs" />
     <Compile Include="Entities\ServerBusyTime.cs" />
     <Compile Include="Entities\Customer.cs" />
-    <Compile Include="MultipleServerSimulation.cs">
+    <Compile Include="intr\discreteDis.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MultipleServerSimulation.Designer.cs">
+    <Compile Include="intr\discreteDis.designer.cs">
+      <DependentUpon>discreteDis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="intr\exponDist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="intr\exponDist.designer.cs">
+      <DependentUpon>exponDist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="intr\MultipleServerSimulation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="intr\MultipleServerSimulation.Designer.cs">
       <DependentUpon>MultipleServerSimulation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="intr\serverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="intr\serverForm.designer.cs">
+      <DependentUpon>serverForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="intr\Server_n.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="intr\Server_n.designer.cs">
+      <DependentUpon>Server_n.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MultipleServerSimulation.resx">
+    <EmbeddedResource Include="intr\CustForm.resx">
+      <DependentUpon>CustForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="intr\discreteDis.resx">
+      <DependentUpon>discreteDis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="intr\exponDist.resx">
+      <DependentUpon>exponDist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="intr\MultipleServerSimulation.resx">
       <DependentUpon>MultipleServerSimulation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="intr\serverForm.resx">
+      <DependentUpon>serverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="intr\Server_n.resx">
+      <DependentUpon>Server_n.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
