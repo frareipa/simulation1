@@ -145,7 +145,6 @@ namespace MultipleQueue.Simulation
             //return the new customer object
         }
 
-
         /// <summary>
         /// Arrives the customer.
         /// </summary>
