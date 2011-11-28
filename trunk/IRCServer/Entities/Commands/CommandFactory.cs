@@ -25,9 +25,9 @@ namespace ICRServer.Entities.Commands
             switch (type.Value)
             {
                 case IRCCommandType.NICK:
-                    throw new NotImplementedException("NICK not implemented");
+                    return new NICKCommand(arguments.ToArray());
                 case IRCCommandType.USER:
-                    throw new NotImplementedException("USER not implemented");
+                    return new USERCommand(arguments.ToArray());
                 default:
                     break;
             }
