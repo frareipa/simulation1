@@ -37,7 +37,7 @@ namespace ICRServer.Entities.Commands
                 switch (type.Value)
                 {
                     case IRCCommandType.PRIVMSG:
-                        throw new NotImplementedException("PRIVMSG not implemented");
+                        return new PRIVMSGCommand(arguments.ToArray());
                     case IRCCommandType.QUIT:
                         return new QUITCommand(arguments.ToArray());
                     default:
