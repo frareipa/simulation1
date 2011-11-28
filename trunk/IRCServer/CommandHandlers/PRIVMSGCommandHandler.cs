@@ -16,7 +16,7 @@ namespace ICRServer.CommandHandlers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class PRIVMSGCommandHandler : CommandHandlerBase
+   class PRIVMSGCommandHandler : CommandHandlerBase
     {
         public override string HandleCommand(IRCCommandBase command, Session session)
         {
