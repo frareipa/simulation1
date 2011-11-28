@@ -23,7 +23,7 @@ namespace ICRServer.CommandHandlers
         {
             if (command is USERCommand)
             {
-                USERCommand quitCommand = (USERCommand)command;
+                USERCommand userCommand = (USERCommand)command;
                 ServerBackend.Instance.Users.Remove(session.User);
                 session.ConnectionState = ConnectionState.Destroyed; 
                 ServerBackend.Instance.ClientSessions.Remove(session);
