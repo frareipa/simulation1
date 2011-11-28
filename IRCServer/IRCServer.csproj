@@ -48,10 +48,14 @@
   <ItemGroup>
     <Compile Include="Backend\ServerBackend.cs" />
     <Compile Include="CommandHandlers\CommandHandlerBase.cs" />
+    <Compile Include="CommandHandlers\NICKCommandHandler.cs" />
+    <Compile Include="CommandHandlers\PRIVMSGCommandHandler.cs" />
     <Compile Include="CommandHandlers\QUITCommandHandler.cs" />
     <Compile Include="CommandHandlers\USERCommandHandler.cs" />
     <Compile Include="Entities\Commands\CommandFactory.cs" />
     <Compile Include="Entities\Commands\IRCCommandBase.cs" />
+    <Compile Include="Entities\Commands\NICKCommand.cs" />
+    <Compile Include="Entities\Commands\PRIVMSGCommand.cs" />
     <Compile Include="Entities\Commands\QUITCommand.cs" />
     <Compile Include="Entities\Commands\USERCommand.cs" />
     <Compile Include="Entities\Session.cs" />
