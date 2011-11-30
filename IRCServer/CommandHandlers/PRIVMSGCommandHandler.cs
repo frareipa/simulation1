@@ -22,7 +22,7 @@ namespace ICRServer.CommandHandlers
         {
             if (command is PRIVMSGCommand)
             {
-                PRIVMSGCommand privmsgCommand = (PRIVMSGCommand)command;
+                PRIVMSGCommand privmsgCommand   (PRIVMSGCommand)command;
                 ServerBackend.Instance.Users.Remove(session.User);
                 session.ConnectionState = ConnectionState.Destroyed;
                 ServerBackend.Instance.ClientSessions.Remove(session);
