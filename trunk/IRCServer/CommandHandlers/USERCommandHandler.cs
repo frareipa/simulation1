@@ -24,10 +24,13 @@ namespace ICRServer.CommandHandlers
             if (command is USERCommand)
             {
                 USERCommand userCommand = (USERCommand)command;
-                ServerBackend.Instance.Users.Remove(session.User);
-                session.ConnectionState = ConnectionState.Destroyed; 
-                ServerBackend.Instance.ClientSessions.Remove(session);
-                return String.Empty;
+                session.User.Username = userCommand.UserName;
+                session.User.Hostname = userCommand.HostName;
+                session.User.Realname = userCommand.RealName;
+                session.ConnectionState = ConnectionState.NotRegistered; 
+
+                ServerBackend.Instance.Users.Add(session.User);
+                return "Done";
             }
             else
             {
