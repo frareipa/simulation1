@@ -23,9 +23,32 @@ namespace ICRServer.CommandHandlers
             if (command is PRIVMSGCommand)
             {
                 PRIVMSGCommand privmsgCommand  = (PRIVMSGCommand)command;
-                ServerBackend.Instance.Users.Remove(session.User);
-                session.ConnectionState = ConnectionState.Destroyed;
-                ServerBackend.Instance.ClientSessions.Remove(session);
+                if(privmsgCommand.Targets[0]==null)
+                {
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NORECIPIENT, null);
+                }
+                if (privmsgCommand.Message == null)
+                {
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NOTEXTTOSEND, null);
+                }
+                bool found = false;
+                for (int i = 0; i < privmsgCommand.Targets.Count; i++)
+                {
+                    foreach (Session s in ServerBackend.Instance.ClientSessions)
+                    {
+                        if (s.User.Nickname == privmsgCommand.Targets[i])
+                        {
+                            s.Socket.Send(Encoding.ASCII.GetBytes(privmsgCommand.Message));
+                            s.Socket.Receive(s.Buffer);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        return Errors.GetErrorResponse(ErrorCode.ERR_NOSUCHNICK, privmsgCommand.Targets[i]);
+                    }
+                }
                 return String.Empty;
             }
             else

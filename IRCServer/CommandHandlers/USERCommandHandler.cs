@@ -24,6 +24,10 @@ namespace ICRServer.CommandHandlers
             if (command is USERCommand)
             {
                 USERCommand userCommand = (USERCommand)command;
+                if(userCommand.UserName==null||userCommand.HostName==null||userCommand.ServerName==null||userCommand.RealName==null)
+                {
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NEEDMOREPARAMS, null);
+                }
                 foreach (User u in ServerBackend.Instance.Users)
                 {
                     if (u.Username == userCommand.UserName)

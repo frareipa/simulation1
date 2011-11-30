@@ -19,9 +19,10 @@ namespace ICRServer
         #region IServer Members
         Socket serversock;
         Socket clientsock;
+       public  int Port;
         public void Start()
         {
-            IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7000);
+            IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.Port);
             serversock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serversock.Bind(serverEP);
             serversock.Listen(100);

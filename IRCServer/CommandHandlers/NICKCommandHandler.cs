@@ -49,11 +49,13 @@ namespace ICRServer.CommandHandlers
                     {
                         user.Nickname = nickCommand.NickName;
                         session.User.Nickname = nickCommand.NickName;
+                        session.ConnectionState = ConnectionState.Registered;
                         return "OK";
                     }
                 }
                 session.User.Nickname = nickCommand.NickName;
                 ServerBackend.Instance.Users.Add(session.User);
+                session.ConnectionState = ConnectionState.NotRegistered;
                 return "OK";
             }
             else
