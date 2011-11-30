@@ -32,7 +32,7 @@ namespace ICRServer.Entities.Commands
         
         public override string ExecuteCommand(Session session)
         {
-            QUITCommandHandler handler = new QUITCommandHandler();
+            PRIVMSGCommandHandler handler = new PRIVMSGCommandHandler();
             return handler.HandleCommand(this, session);
         }
 
