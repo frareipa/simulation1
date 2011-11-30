@@ -41,6 +41,8 @@ namespace ICRServer.CommandHandlers
                     }
 
                 }
+
+
                 foreach (User user in ServerBackend.Instance.Users)
                 {
                     if (user == session.User)
