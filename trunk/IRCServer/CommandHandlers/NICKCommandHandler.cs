@@ -19,22 +19,45 @@ namespace ICRServer.CommandHandlers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-     class NICKCommandHandler : CommandHandlerBase
+    class NICKCommandHandler : CommandHandlerBase
     {
-         public override string HandleCommand(IRCCommandBase command, Session session)
-         {
-             if (command is QUITCommand)
-             {
-                 NICKCommand nickCommand = (NICKCommand)command;
-                 ServerBackend.Instance.Users.Remove(session.User);
-                 session.ConnectionState = ConnectionState.Destroyed;
-                 ServerBackend.Instance.ClientSessions.Remove(session);
-                 return String.Empty;
-             }
-             else
-             {
-                 throw new ArgumentException();
-             }
-         }
+        public override string HandleCommand(IRCCommandBase command, Session session)
+        {
+            if (command is NICKCommand)
+            {
+                NICKCommand nickCommand = (NICKCommand)command;
+                if (nickCommand.NickName == "")
+                {
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NONICKNAMEGIVEN, null);
+                }
+                else
+                {
+                    foreach (User user in ServerBackend.Instance.Users)
+                    {
+                        if (user.Nickname == nickCommand.NickName)
+                        {
+                            return Errors.GetErrorResponse(ErrorCode.ERR_NICKNAMEINUSE, null);
+                        }
+                    }
+
+                }
+                foreach (User user in ServerBackend.Instance.Users)
+                {
+                    if (user == session.User)
+                    {
+                        user.Nickname = nickCommand.NickName;
+                        session.User.Nickname = nickCommand.NickName;
+                        return "OK";
+                    }
+                }
+                session.User.Nickname = nickCommand.NickName;
+                ServerBackend.Instance.Users.Add(session.User);
+                return "OK";
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
     }
 }
