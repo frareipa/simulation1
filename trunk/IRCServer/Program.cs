@@ -15,7 +15,10 @@ namespace ICRServer
         {
             Logger.Instance.Verbose = true;
             // Start your server using port number passed in the args array.
-            
+            ICRServer server = new ICRServer();
+            server.Port = int.Parse(args[0]);
+            server.Start();
+
         }
     }
 }
