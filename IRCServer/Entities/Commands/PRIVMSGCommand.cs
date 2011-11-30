@@ -17,17 +17,19 @@ namespace ICRServer.Entities.Commands
     /// </summary>
     class PRIVMSGCommand : IRCCommandBase
     {
+        // Parameters: <target>{,<target>} <text to be sent>
         public string Message { get; set; }
-
+       
         public PRIVMSGCommand(string[] parameters) :
             base(parameters)
         {
-            if (parameters.Length > 0)
+            if (parameters.Length > 1)
             {
-                this.Message = parameters[0];
+                this.Message = parameters[1];
             }
         }
 
+        
         public override string ExecuteCommand(Session session)
         {
             QUITCommandHandler handler = new QUITCommandHandler();

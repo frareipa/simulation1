@@ -17,16 +17,23 @@ namespace ICRServer.Entities.Commands
     /// </summary>
     public class USERCommand : IRCCommandBase
     {
+        //Parameters: <username> <hostname> <servername> <realname>
         public USERCommand(string[] parameters) :
             base(parameters)
         {
-            if (parameters.Length > 0)
+            if (parameters.Length > 3)
             {
-                this.Message = parameters[0];
+                this.UserName = parameters[0];
+                this.RealName = parameters[1];
+                this.HostName = parameters[2];
+                this.ServerName = parameters[3];
             }
         }
 
-        public string Message { get; set; }
+        public string UserName { get; set; }
+        public string RealName { get; set; }
+        public string HostName { get; set; }
+        public string ServerName { get; set; }
 
         public override string ExecuteCommand(Session session)
         {
