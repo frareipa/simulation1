@@ -21,11 +21,11 @@ namespace ICRServer.Entities.Commands
         {
             if (parameters.Length > 0)
             {
-                this.Message = parameters[0];
+                this.NickName = parameters[0];
             }
         }
 
-        public string Message { get; set; }
+        public string NickName { get; set; }
 
         public override string ExecuteCommand(Session session)
         {
