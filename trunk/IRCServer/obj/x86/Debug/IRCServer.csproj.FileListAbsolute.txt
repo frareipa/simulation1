@@ -1,8 +1,0 @@
-D:\kolya\Fourth year\computer networks\IRCServer\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\kolya\Fourth year\computer networks\IRCServer\bin\Debug\ICRServer.exe.config
-D:\kolya\Fourth year\computer networks\IRCServer\bin\Debug\ICRServer.exe
-D:\kolya\Fourth year\computer networks\IRCServer\bin\Debug\ICRServer.pdb
-D:\kolya\Fourth year\computer networks\IRCServer\bin\Debug\log4net.dll
-D:\kolya\Fourth year\computer networks\IRCServer\bin\Debug\Utilities.dll
-D:\kolya\Fourth year\computer networks\IRCServer\obj\x86\Debug\ICRServer.exe
-D:\kolya\Fourth year\computer networks\IRCServer\obj\x86\Debug\ICRServer.pdb
