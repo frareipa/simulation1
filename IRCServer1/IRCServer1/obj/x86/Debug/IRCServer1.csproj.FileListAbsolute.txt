@@ -1,0 +1,8 @@
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\bin\Debug\IRCServer1.exe.config
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\bin\Debug\IRCServer1.exe
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\bin\Debug\IRCServer1.pdb
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\bin\Debug\log4net.dll
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\bin\Debug\Utilities.dll
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\obj\x86\Debug\IRCServer1.exe
+D:\faculty\4th year\first term\network\program\IRCServer1\IRCServer1\obj\x86\Debug\IRCServer1.pdb
