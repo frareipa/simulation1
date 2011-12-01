@@ -36,7 +36,7 @@ namespace IRCServer1.CommandHandlers
                     {
                         if (user.Nickname == nickCommand.NickName)
                         {
-                            return Errors.GetErrorResponse(ErrorCode.ERR_NICKNAMEINUSE, null);
+                            return Errors.GetErrorResponse(ErrorCode.ERR_NICKNAMEINUSE, nickCommand.NickName);
                         }
                     }
 
