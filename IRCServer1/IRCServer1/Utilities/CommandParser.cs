@@ -41,10 +41,10 @@ namespace IRCServer1.Utilities
 
         public static IRCCommandType? GetIRCCommandFromString(string command)
         {
-
-            string commandUpperCase = command.ToUpper();
-
-            switch (commandUpperCase)
+            string upper=command.ToUpper();
+            string[] commandUpperCase = upper.Split('\0');
+            
+            switch (commandUpperCase[0])
             {
                 case USERCommand:
                     return IRCCommandType.USER;

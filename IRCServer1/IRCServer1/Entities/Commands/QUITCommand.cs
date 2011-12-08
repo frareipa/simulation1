@@ -12,7 +12,7 @@ namespace IRCServer1.Entities.Commands
         {
             if (parameters.Length > 0)
             {
-                this.Message = parameters[0];
+                this.Message = parameters[0].Split('\0')[0];
             }
         }
 

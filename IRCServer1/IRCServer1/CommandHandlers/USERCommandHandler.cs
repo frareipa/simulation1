@@ -26,7 +26,7 @@ namespace IRCServer1.CommandHandlers
                 USERCommand userCommand = (USERCommand)command;
                 if(userCommand.UserName==null||userCommand.HostName==null||userCommand.ServerName==null||userCommand.RealName==null)
                 {
-                    return Errors.GetErrorResponse(ErrorCode.ERR_NEEDMOREPARAMS, null);
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NEEDMOREPARAMS,"User");
                 }
                 foreach (User u in ServerBackend.Instance.Users)
                 {

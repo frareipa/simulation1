@@ -19,7 +19,7 @@ namespace IRCServer1.CommandHandlers
                 ServerBackend.Instance.Users.Remove(session.User);
                 session.ConnectionState = ConnectionState.Destroyed;
                 ServerBackend.Instance.ClientSessions.Remove(session);
-                return String.Empty;
+                return "OK";
             }
             else
             {

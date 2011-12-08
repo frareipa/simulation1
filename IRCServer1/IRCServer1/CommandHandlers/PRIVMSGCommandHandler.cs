@@ -23,11 +23,30 @@ namespace IRCServer1.CommandHandlers
             if (command is PRIVMSGCommand)
             {
                 PRIVMSGCommand privmsgCommand  = (PRIVMSGCommand)command;
-                if(privmsgCommand.Targets[0]==null)
+                if (privmsgCommand.Message == null && privmsgCommand.Targets.Count == 0)
                 {
-                    return Errors.GetErrorResponse(ErrorCode.ERR_NORECIPIENT, null);
+                    return Errors.GetErrorResponse(ErrorCode.ERR_NORECIPIENT, "privmsg")+" and "+Errors.GetErrorResponse(ErrorCode.ERR_NOTEXTTOSEND, null);
                 }
-                if (privmsgCommand.Message == null)
+                else if (privmsgCommand.Message==null)
+                {
+                            bool isNickName = false;
+                            foreach (Session s in ServerBackend.Instance.ClientSessions)
+                            {
+                                if (s.User.Nickname == privmsgCommand.Targets[0])
+                                {
+                                    isNickName = true;
+                                }
+                            }
+                        if (isNickName == true)
+                        {
+                            return Errors.GetErrorResponse(ErrorCode.ERR_NOTEXTTOSEND, null);
+                        }
+                        else
+                        {
+                            return Errors.GetErrorResponse(ErrorCode.ERR_NORECIPIENT, "privmsg");
+                        }
+                    }
+                else if (privmsgCommand.Message == null)
                 {
                     return Errors.GetErrorResponse(ErrorCode.ERR_NOTEXTTOSEND, null);
                 }
@@ -39,7 +58,6 @@ namespace IRCServer1.CommandHandlers
                         if (s.User.Nickname == privmsgCommand.Targets[i])
                         {
                             s.Socket.Send(Encoding.ASCII.GetBytes(privmsgCommand.Message));
-                            s.Socket.Receive(s.Buffer);
                             found = true;
                             break;
                         }
