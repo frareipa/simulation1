@@ -29,6 +29,7 @@ namespace IRCServer1
             while (1 == 1)
             {
                 this.WaitForConnections();
+                System.Threading.Thread.Sleep(3000);
             }
         }
 
@@ -44,6 +45,7 @@ namespace IRCServer1
             Session newSession = new Session();
             newSession.Socket = clientsock;
             Backend.ServerBackend.Instance.ClientSessions.Add(newSession);
+           // newSession.Buffer[0] = 0;
             newSession.Socket.BeginReceive(newSession.Buffer, 0, newSession.Buffer.Length,SocketFlags.None, new AsyncCallback(ReceiveCommand), newSession);
 
         }
@@ -60,6 +62,7 @@ namespace IRCServer1
         {
             Session newSession = (Session)result.AsyncState;
             newSession.Socket.EndSend(result);
+            newSession.Buffer = new byte[newSession.Buffer.Length];
             newSession.Socket.BeginReceive(newSession.Buffer, 0, newSession.Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCommand), newSession);
         }
 
