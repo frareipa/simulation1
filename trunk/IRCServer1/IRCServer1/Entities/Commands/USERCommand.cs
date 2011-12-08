@@ -23,10 +23,10 @@ namespace IRCServer1.Entities.Commands
         {
             if (parameters.Length > 3)
             {
-                this.UserName = parameters[0];
-                this.RealName = parameters[1];
-                this.HostName = parameters[2];
-                this.ServerName = parameters[3];
+                this.UserName = parameters[0].Split('\0')[0];
+                this.RealName = parameters[1].Split('\0')[0];
+                this.HostName = parameters[2].Split('\0')[0];
+                this.ServerName = parameters[3].Split('\0')[0];
             }
         }
 

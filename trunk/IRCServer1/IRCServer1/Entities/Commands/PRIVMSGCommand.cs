@@ -21,17 +21,21 @@ namespace IRCServer1.Entities.Commands
         public string Message { get; set; }
        // public string[] Targets = new string[100];
         public List<string> Targets = new List<string>();
-       
+
         public PRIVMSGCommand(string[] parameters) :
             base(parameters)
         {
-            if (parameters.Length > 2)
+            if (parameters.Length > 0)
             {
-                for (int i = 0; i < parameters.Length - 1; i++)
+
+                for (int i = 0; i < parameters[0].Split(',').Length; i++)
                 {
-                    this.Targets.Add(parameters[i]);
+                    this.Targets.Add(parameters[0].Split(',')[i].Split('\0')[0]);
                 }
-                this.Message = parameters[parameters.Length-1];
+                if (parameters.Length != 1)
+                {
+                    this.Message = parameters[parameters.Length - 1].Split('\0')[0];
+                }
             }
         }
         

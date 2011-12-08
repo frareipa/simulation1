@@ -26,7 +26,7 @@ namespace IRCServer1.CommandHandlers
             if (command is NICKCommand)
             {
                 NICKCommand nickCommand = (NICKCommand)command;
-                if (nickCommand.NickName == "")
+                if (nickCommand.NickName == null)
                 {
                     return Errors.GetErrorResponse(ErrorCode.ERR_NONICKNAMEGIVEN, null);
                 }
