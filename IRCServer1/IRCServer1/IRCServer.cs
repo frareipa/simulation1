@@ -46,6 +46,7 @@ namespace IRCServer1
             newSession.Socket = clientsock;
             Backend.ServerBackend.Instance.ClientSessions.Add(newSession);
            // newSession.Buffer[0] = 0;
+            newSession.Buffer = new byte[1024];
             newSession.Socket.BeginReceive(newSession.Buffer, 0, newSession.Buffer.Length,SocketFlags.None, new AsyncCallback(ReceiveCommand), newSession);
 
         }
