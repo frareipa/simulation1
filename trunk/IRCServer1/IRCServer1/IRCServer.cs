@@ -29,7 +29,7 @@ namespace IRCServer1
             while (1 == 1)
             {
                 this.WaitForConnections();
-                System.Threading.Thread.Sleep(3000);
+                System.Threading.Thread.Sleep(30000);
             }
         }
 
@@ -55,8 +55,25 @@ namespace IRCServer1
         {
             Session newsession = (Session)result.AsyncState;
             newsession.Socket.EndReceive(result);
-            string response = CommandFactory.GetCommandFromMessage(Encoding.ASCII.GetString(newsession.Buffer), newsession).ExecuteCommand(newsession);
-            newsession.Socket.BeginSend(Encoding.ASCII.GetBytes(response), 0, Encoding.ASCII.GetBytes(response).Length, SocketFlags.None, new AsyncCallback(FinalizeSending), newsession);
+            if (Encoding.ASCII.GetString(newsession.Buffer).Split('\0').Length == 0)
+            {
+                IRCCommandBase q = new QUITCommand(null);
+                q.ExecuteCommand(newsession);
+            }
+            else
+            {
+                string response;
+                try
+                {
+                     response = CommandFactory.GetCommandFromMessage(Encoding.ASCII.GetString(newsession.Buffer), newsession).ExecuteCommand(newsession);
+                    newsession.Socket.BeginSend(Encoding.ASCII.GetBytes(response), 0, Encoding.ASCII.GetBytes(response).Length, SocketFlags.None, new AsyncCallback(FinalizeSending), newsession);
+                }
+                catch
+                {
+                    newsession.Socket.BeginSend(newsession.Buffer, 0, newsession.Buffer.Length, SocketFlags.None, new AsyncCallback(FinalizeSending), newsession);
+                }
+                   
+            }
         }
 
         public void FinalizeSending(IAsyncResult result)
@@ -64,10 +81,19 @@ namespace IRCServer1
             Session newSession = (Session)result.AsyncState;
             newSession.Socket.EndSend(result);
             newSession.Buffer = new byte[newSession.Buffer.Length];
-            newSession.Socket.BeginReceive(newSession.Buffer, 0, newSession.Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCommand), newSession);
+          try
+          {
+                newSession.Socket.BeginReceive(newSession.Buffer, 0, newSession.Buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCommand), newSession);
+          }
+            catch
+          {
+                newSession.Socket.Close();
+            }
+
+          }
+
         }
 
         #endregion
 
     }
-}
