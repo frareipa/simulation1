@@ -25,11 +25,16 @@ namespace IRCServer1
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Any, this.Port);
             serversock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serversock.Bind(serverEP);
-            serversock.Listen(100);
-            while (1 == 1)
+            serversock.Listen(1000);
+            //while (1 == 1)
+            //{
+            //    this.WaitForConnections();
+            //    System.Threading.Thread.Sleep(30000);
+            //}
+            this.WaitForConnections();
+            while (true)
             {
-                this.WaitForConnections();
-                System.Threading.Thread.Sleep(30000);
+                   System.Threading.Thread.Sleep(30000);
             }
         }
 
@@ -42,6 +47,7 @@ namespace IRCServer1
         {
             serversock = (Socket)result.AsyncState;
             clientsock = serversock.EndAccept(result);
+            this.WaitForConnections();
             Session newSession = new Session();
             newSession.Socket = clientsock;
             Backend.ServerBackend.Instance.ClientSessions.Add(newSession);

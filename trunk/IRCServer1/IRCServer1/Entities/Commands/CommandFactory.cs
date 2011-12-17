@@ -13,7 +13,10 @@ namespace IRCServer1.Entities.Commands
             string[] parameters = Utilities.CommandParser.GetParameters(message);
 
             if (parameters.Length == 0)
-                throw new InvalidOperationException();
+            {
+                session.Buffer = Encoding.ASCII.GetBytes(Errors.GetErrorResponse(ErrorCode.ERR_UNKNOWNCOMMAND, null));
+                return null;
+            }
             IRCCommandType? type = CommandParser.GetIRCCommandFromString(parameters[0]);
 
             if (!type.HasValue)
@@ -52,6 +55,11 @@ namespace IRCServer1.Entities.Commands
                 {
                     case IRCCommandType.QUIT:
                         return new QUITCommand(arguments.ToArray());
+                    case IRCCommandType.PRIVMSG:
+                        {
+                            session.Buffer = Encoding.ASCII.GetBytes(Errors.GetErrorResponse(ErrorCode.ERR_UNKNOWNCOMMAND, null));
+                            return null;
+                        }
                 }
                 return null;
             }

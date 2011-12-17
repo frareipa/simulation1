@@ -28,6 +28,13 @@ namespace IRCServer1.CommandHandlers
                 {
                     return Errors.GetErrorResponse(ErrorCode.ERR_NEEDMOREPARAMS,"User");
                 }
+                if (session.User != null)
+                {
+                    if (session.User.Username != null)
+                    {
+                        return Errors.GetErrorResponse(ErrorCode.ERR_ALREADYREGISTERED, null);
+                    }
+                }
                 foreach (User u in ServerBackend.Instance.Users)
                 {
                     if (u.Username == userCommand.UserName)
@@ -40,20 +47,35 @@ namespace IRCServer1.CommandHandlers
                 {
                     if (user == session.User)
                     {
-                        session.User.Username = userCommand.UserName;
-                        session.User.Hostname = userCommand.HostName;
-                        session.User.Realname = userCommand.RealName;
-                        session.ConnectionState = ConnectionState.Registered;
-                        return "OK";
+                        if (user.Nickname != null)
+                        {
+                            session.User.Username = userCommand.UserName;
+                            session.User.Hostname = userCommand.HostName;
+                            session.User.Realname = userCommand.RealName;
+                            session.ConnectionState = ConnectionState.Registered;
+                            return "OK";
+                        }
+
+                        else
+                        {
+
+                            session.User.Username = userCommand.UserName;
+                            session.User.Hostname = userCommand.HostName;
+                            session.User.Realname = userCommand.RealName;
+                            session.ConnectionState = ConnectionState.NotRegistered;
+                            return "OK";
+                        }
                     }
                 }
-                session.User = new User();
-                session.User.Username = userCommand.UserName;
-                session.User.Hostname = userCommand.HostName;
-                session.User.Realname = userCommand.RealName;
-                session.ConnectionState = ConnectionState.NotRegistered; 
-
-                ServerBackend.Instance.Users.Add(session.User);
+                if (session.User == null)
+                {
+                    session.User = new User();
+                    session.User.Username = userCommand.UserName;
+                    session.User.Hostname = userCommand.HostName;
+                    session.User.Realname = userCommand.RealName;
+                    session.ConnectionState = ConnectionState.NotRegistered;
+                    ServerBackend.Instance.Users.Add(session.User);
+                }
                 return "OK";
             }
             else

@@ -32,12 +32,14 @@ namespace IRCServer1.CommandHandlers
                 }
                 else
                 {
-                    foreach (User user in ServerBackend.Instance.Users)
+                    foreach (Session S in ServerBackend.Instance.ClientSessions)
                     {
-                        if (user.Nickname == nickCommand.NickName)
-                        {
-                            return Errors.GetErrorResponse(ErrorCode.ERR_NICKNAMEINUSE, nickCommand.NickName);
-                        }
+                        if (S.User != null)
+                            if (S.User.Nickname == nickCommand.NickName)
+                            {
+                                if (S.Socket != session.Socket)
+                                    return Errors.GetErrorResponse(ErrorCode.ERR_NICKNAMEINUSE, nickCommand.NickName);
+                            }
                     }
 
                 }
@@ -47,16 +49,29 @@ namespace IRCServer1.CommandHandlers
                 {
                     if (user == session.User)
                     {
-                        user.Nickname = nickCommand.NickName;
-                        session.User.Nickname = nickCommand.NickName;
-                        session.ConnectionState = ConnectionState.Registered;
-                        return "OK";
+                        if (user.Realname != null)
+                        {
+                            user.Nickname = nickCommand.NickName;
+                            session.User.Nickname = nickCommand.NickName;
+                            session.ConnectionState = ConnectionState.Registered;
+                            return "OK";
+                        }
+                        else
+                        {
+                            user.Nickname = nickCommand.NickName;
+                            session.User.Nickname = nickCommand.NickName;
+                            session.ConnectionState = ConnectionState.NotRegistered;
+                            return "OK";
+                        }
                     }
                 }
-                session.User = new User();
-                session.User.Nickname = nickCommand.NickName;
-                ServerBackend.Instance.Users.Add(session.User);
-                session.ConnectionState = ConnectionState.NotRegistered;
+                if (session.User == null)
+                {
+                    session.User = new User();
+                    session.User.Nickname = nickCommand.NickName;
+                    ServerBackend.Instance.Users.Add(session.User);
+                }
+
                 return "OK";
             }
             else
