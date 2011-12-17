@@ -35,13 +35,13 @@ namespace IRCServer1.CommandHandlers
                         return Errors.GetErrorResponse(ErrorCode.ERR_ALREADYREGISTERED, null);
                     }
                 }
-                foreach (User u in ServerBackend.Instance.Users)
-                {
-                    if (u.Username == userCommand.UserName)
-                    {
-                        return Errors.GetErrorResponse(ErrorCode.ERR_ALREADYREGISTERED, null);
-                    }
-                }
+                //foreach (User u in ServerBackend.Instance.Users)
+                //{
+                //    if (u.Username == userCommand.UserName)
+                //    {
+                //        return Errors.GetErrorResponse(ErrorCode.ERR_ALREADYREGISTERED, null);
+                //    }
+                //}
 
                 foreach (User user in ServerBackend.Instance.Users)
                 {
