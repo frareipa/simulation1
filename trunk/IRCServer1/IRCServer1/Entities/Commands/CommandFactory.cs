@@ -21,7 +21,7 @@ namespace IRCServer1.Entities.Commands
 
             if (!type.HasValue)
             {
-               session.Buffer= Encoding.ASCII.GetBytes(Errors.GetErrorResponse(ErrorCode.ERR_UNKNOWNCOMMAND, null));
+               session.Buffer= Encoding.ASCII.GetBytes(Errors.GetErrorResponse(ErrorCode.ERR_UNKNOWNCOMMAND, parameters[0]));
                return null;
             }
 
