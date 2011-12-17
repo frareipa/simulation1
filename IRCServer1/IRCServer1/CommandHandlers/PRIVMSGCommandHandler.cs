@@ -22,6 +22,11 @@ namespace IRCServer1.CommandHandlers
         {
             if (command is PRIVMSGCommand)
             {
+
+                if (session.ConnectionState == ConnectionState.NotRegistered)
+                {
+                    return "Unregistered user";
+                }
                 PRIVMSGCommand privmsgCommand  = (PRIVMSGCommand)command;
                 if (privmsgCommand.Targets.Count == 0)
                 {
@@ -40,7 +45,10 @@ namespace IRCServer1.CommandHandlers
                     {
                         if (s.User.Nickname == privmsgCommand.Targets[i])
                         {
-                            found = true;
+                            if (s.ConnectionState == ConnectionState.Registered)
+                            {
+                                found = true;
+                            }
                             break;
                         }
                     }
@@ -48,6 +56,7 @@ namespace IRCServer1.CommandHandlers
                     {
                         return Errors.GetErrorResponse(ErrorCode.ERR_NOSUCHNICK, privmsgCommand.Targets[i]);
                     }
+                    found = false;
                 }
                 for (int i = 0; i < privmsgCommand.Targets.Count; i++)
                 {
@@ -59,7 +68,7 @@ namespace IRCServer1.CommandHandlers
                         }
                     }
                 }
-                return "ok";
+                return "OK";
             }
             else
             {
