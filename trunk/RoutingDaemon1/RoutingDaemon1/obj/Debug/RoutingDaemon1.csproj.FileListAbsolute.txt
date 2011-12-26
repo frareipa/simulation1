@@ -1,0 +1,9 @@
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\RoutingDaemon1.exe.config
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\RoutingDaemon1.exe
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\RoutingDaemon1.pdb
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\log4net.dll
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\Utilities.dll
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\bin\Debug\log4net.xml
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\obj\Debug\ResolveAssemblyReference.cache
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\obj\Debug\RoutingDaemon1.exe
+D:\IRCServer\RoutingDaemon1\RoutingDaemon1\obj\Debug\RoutingDaemon1.pdb
