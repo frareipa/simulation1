@@ -5,9 +5,8 @@ using System.Text;
 
 namespace RoutingDaemon1.ServerInterface.Commands
 {
-    abstract class DaemonCommandBase
+  public  abstract class DaemonCommandBase
     {
-
-        //public abstract string ExecuteCommand();
+        public abstract string ExecuteCommand();
     }
 }
