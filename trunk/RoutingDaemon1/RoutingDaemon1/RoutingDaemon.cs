@@ -80,7 +80,23 @@ namespace RoutingDaemon1
         /// </summary>
         private void WaitForLSAs()
         {
-          // daemonUDPSocket.Receive(
+            byte[] buffer = new byte[1024];
+            EndPoint EP = new IPEndPoint(IPAddress.Any, 0);
+            daemonUDPSocket.ReceiveFrom(buffer, ref EP);
+            LSA lsa = new LSA();
+            lsa = Utilities.LSAUtility.CreateLSAFromByteArray(buffer);
+            if(lsa.Type == LSAType.Advertisement)
+            {
+                LSA newLsa = Backend.DaemonBackEnd.Instance.UpdateBackEndWithLSA(lsa);
+                if (newLsa == null)
+                {
+
+                }
+                else
+                {
+                }
+
+            }
         }
 
         /// <summary>
