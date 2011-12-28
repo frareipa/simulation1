@@ -102,8 +102,8 @@ namespace RoutingDaemon1.Backend
         /// <returns>Null on successful update, and an LSA if the sequence number is older than the latest received from that sender.</returns>
         public LSA UpdateBackEndWithLSA(LSA lsa)
         {
-           // bool found=false;
-            if (lsa.SequenceNumber > this.LocalNode.LastSequenceNumber)
+            Node SenderNode = GetNodeByID(lsa.SenderNodeID);
+            if (lsa.SequenceNumber > GetNodeByID(lsa.SenderNodeID).LastSequenceNumber)
             {
               
                 this.allNodes = lsa.Links;
@@ -133,6 +133,17 @@ namespace RoutingDaemon1.Backend
         /// <param name="configuration">The configuration loaded from the configuration file.</param>
         public void ConfigureLocalNode(List<NodeConfiguration> configuration)
         {
+            //how can i know the local one is it the first one or WHAT?
+            this.LocalNode.Configuration = configuration[0];
+            this.LocalNode.LastSequenceNumber = 0;
+            this.LocalNode.NodeID = configuration[0].NodeID;
+            foreach (NodeConfiguration temp in configuration)
+            {
+                if (!(temp.NodeID == LocalNode.NodeID))
+                {
+                   Node n=GetNodeByID(temp.NodeID);
+                }
+            }
             throw new NotImplementedException();
         }
 
@@ -142,7 +153,17 @@ namespace RoutingDaemon1.Backend
         /// <returns>The LSA of the local node.</returns>
         public LSA GetLocalNodeLSA()
         {
-            throw new NotImplementedException();
+            LSA lsa = new LSA();
+            lsa.SenderNodeID = this.LocalNode.NodeID;
+            lsa.SequenceNumber = this.LocalNode.LastSequenceNumber + 1;
+            lsa.Type = LSAType.Advertisement;
+            lsa.Users = this.LocalNode.Users;
+            lsa.Links = this.LocalNode.Neighbors;
+            lsa.Version = 1;
+            lsa.TTL = 32;
+            return lsa;
+
+           // throw new NotImplementedException();
         }
 
         /// <summary>
