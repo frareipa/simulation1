@@ -6,7 +6,7 @@ using RoutingDaemon1.ServerInterface.Commands;
 
 namespace RoutingDaemon1.ServerInterface.CommandHandlers
 {
-    abstract class CommandHandlerBase
+    public abstract class CommandHandlerBase
     {
         public abstract string HandleCommand(DaemonCommandBase command);
     }

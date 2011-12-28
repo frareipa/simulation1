@@ -1,9 +1,9 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="USERCommand.cs" company="fcis">
+// <copyright file="USERTABLECommand.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-using RoutingDaemon1.ServerInterface.CommandHandlers;
+
 namespace RoutingDaemon1.ServerInterface.Commands
 {
     using System;
@@ -14,10 +14,10 @@ namespace RoutingDaemon1.ServerInterface.Commands
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ADDUSERCommand  :DaemonCommandBase 
+    public class USERTABLECommand : DaemonCommandBase
     {
-        //Parameters: <username> <hostname> <servername> <realname>
-        public ADDUSERCommand(string[] parameters) 
+            //Parameters: <username> <hostname> <servername> <realname>
+        public USERTABLECommand(string[] parameters) 
         {
             if (parameters.Length > 0)
             {
@@ -29,7 +29,7 @@ namespace RoutingDaemon1.ServerInterface.Commands
 
         public override string ExecuteCommand()
         {
-         ServerInterface.CommandHandlers.ADDUSERCommandHandler handler = new ServerInterface.CommandHandlers.ADDUSERCommandHandler();
+         ServerInterface.CommandHandlers.USERTABLECommandHandler handler = new ServerInterface.CommandHandlers.USERTABLECommandHandler();
             return handler.HandleCommand(this);
         }
     }
