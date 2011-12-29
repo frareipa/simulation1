@@ -75,9 +75,13 @@ namespace RoutingDaemon1
             ircServer = new IRCServer(daemonTCPSocket);
             while (true)
             {
-                DaemonCommandBase  daemand=ircServer.ReceiveCommand();
-              string Response=  daemand.ExecuteCommand();
-              ircServer.SendResponse(Response);
+                try
+                {
+                    DaemonCommandBase daemand = ircServer.ReceiveCommand();
+                    string Response = daemand.ExecuteCommand();
+                    ircServer.SendResponse(Response);
+                }
+                catch { }
             }
         }
 
@@ -88,7 +92,13 @@ namespace RoutingDaemon1
         {
             byte[] buffer = new byte[1024];
             EndPoint EP = new IPEndPoint(IPAddress.Any, 0);
-            daemonUDPSocket.ReceiveFrom(buffer, ref EP);
+            try
+            {
+                daemonUDPSocket.ReceiveFrom(buffer, ref EP);
+            }
+            catch
+            {
+            }
             LSA lsa = new LSA();
             lsa = Utilities.LSAUtility.CreateLSAFromByteArray(buffer);
             if(lsa.Type == LSAType.Advertisement)
@@ -102,14 +112,26 @@ namespace RoutingDaemon1
                         if (!(n.IsDown) && n.NodeID != newLsa.SenderNodeID)
                         {
                             EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
-                            daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(newLsa), EPN);
+                            try
+                            {
+                                daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(newLsa), EPN);
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
                     
                 }
                 else
                 {
-                    daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(newLsa), EP);
+                    try
+                    {
+                        daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(newLsa), EP);
+                    }
+                    catch
+                    {
+                    }
                 }
 
             }
@@ -145,7 +167,13 @@ namespace RoutingDaemon1
                 {
                     EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
                     /**************************************************************/
-                   daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), EPN);
+                    try
+                    {
+                        daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), EPN);
+                    }
+                    catch
+                    {
+                    }
 
                     n.IsAcknowledged = false;
 
@@ -179,7 +207,13 @@ namespace RoutingDaemon1
                     {
                         
                         EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
-                        daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), EPN);
+                        try
+                        {
+                            daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), EPN);
+                        }
+                        catch
+                        {
+                        }
 
                         n.IsAcknowledged = false;
 

@@ -51,17 +51,19 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                             {
                                 if(e.Node.Users.Contains(U))
                                 {
-                                    if(e.NextHop.NodeID==int.Parse(respones[0]))
+                                    if(e.NextHop.NodeID!=Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
                                     {
                                         respones[0] = e.NextHop.ToString();
                                     respones[1]=e.Distance.ToString();
+                                    return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK, respones);
+                        
                                         break;
                                     }
 
                                 }
                             }
-                      return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK,respones);
-                        }
+                            return "ERROR";
+                      }
             else
                 return "ERROR";
                     }
