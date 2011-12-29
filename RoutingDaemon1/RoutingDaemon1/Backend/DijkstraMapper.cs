@@ -101,7 +101,7 @@ namespace RoutingDaemon1.Backend
         /// </summary>
         public void Run()
         {
-            for (trank = 1; trank > rank; trank++)
+            for (trank = 1; trank < rank; trank++)
             {
                 DijkstraSolving();
             }

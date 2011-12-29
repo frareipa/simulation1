@@ -103,28 +103,30 @@ namespace RoutingDaemon1.Backend
         public LSA UpdateBackEndWithLSA(LSA lsa)
         {
             Node SenderNode = GetNodeByID(lsa.SenderNodeID);
-            if (lsa.SequenceNumber > GetNodeByID(lsa.SenderNodeID).LastSequenceNumber)
+            if (lsa.SequenceNumber > SenderNode.LastSequenceNumber)
             {
-              
-                this.allNodes = lsa.Links;
-                this.LocalNode.Users = lsa.Users;
+
+                int index = allNodes.IndexOf(SenderNode);
+                allNodes[index].Neighbors = lsa.Links;
+                allNodes[index].Users = lsa.Users;
+                allNodes[index].LastSequenceNumber = lsa.SequenceNumber;
+                allNodes[index].IsDown = false;
+                allNodes[index].LastUpdateTime = DateTime.Now;
                 this.UpdateRoutingTable();
                 return null;
             }
             else
             {
+                //send my lsa
+                int index = allNodes.IndexOf(SenderNode);
+                lsa.Links = allNodes[index].Neighbors;
+                lsa.Users = allNodes[index].Users;
+                lsa.SequenceNumber = allNodes[index].LastSequenceNumber;
+                
+
                 return lsa;
             }
-            //foreach (Node n in this.allNodes)
-            //{
-            //    if (n.NodeID == lsa.SenderNodeID)
-            //    {
-            //        if (lsa.SequenceNumber < n.LastSequenceNumber)
-            //        {
-                       
-            //        }
-            //    }
-            //}
+      
         }
 
         /// <summary>
@@ -134,17 +136,21 @@ namespace RoutingDaemon1.Backend
         public void ConfigureLocalNode(List<NodeConfiguration> configuration)
         {
             //how can i know the local one is it the first one or WHAT?
-            this.LocalNode.Configuration = configuration[0];
-            this.LocalNode.LastSequenceNumber = 0;
-            this.LocalNode.NodeID = configuration[0].NodeID;
-            foreach (NodeConfiguration temp in configuration)
+            foreach (NodeConfiguration nc in configuration)
             {
-                if (!(temp.NodeID == LocalNode.NodeID))
+                if (nc.NodeID == this.LocalNode.NodeID)
                 {
-                   Node n=GetNodeByID(temp.NodeID);
+                    this.LocalNode.Configuration = nc;
+                }
+                else
+                {
+                    Node n = new Node();
+                    n.NodeID = nc.NodeID;
+                    n.Configuration=nc;
+                    this.LocalNode.Neighbors.Add(n);
                 }
             }
-            throw new NotImplementedException();
+          //  throw new NotImplementedException();
         }
 
         /// <summary>
@@ -155,12 +161,13 @@ namespace RoutingDaemon1.Backend
         {
             LSA lsa = new LSA();
             lsa.SenderNodeID = this.LocalNode.NodeID;
-            lsa.SequenceNumber = this.LocalNode.LastSequenceNumber + 1;
+            lsa.SequenceNumber = this.LocalNode.LastSequenceNumber ;
             lsa.Type = LSAType.Advertisement;
             lsa.Users = this.LocalNode.Users;
             lsa.Links = this.LocalNode.Neighbors;
             lsa.Version = 1;
             lsa.TTL = 32;
+            
             return lsa;
 
            // throw new NotImplementedException();
@@ -173,6 +180,7 @@ namespace RoutingDaemon1.Backend
         /// <returns>List of all nodes mapped.</returns>
         private List<Node> GetAllNodes(Node rootNode)
         {
+
             throw new NotImplementedException();
         }
 
