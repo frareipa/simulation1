@@ -18,7 +18,27 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
     {
         public override string HandleCommand(DaemonCommandBase command)
         {
-            return null;
+            if(command is USERTABLECommand)
+            {
+                int count = 0;
+                string []respones=new string[1];
+                respones[0] = "";
+                              foreach(Entities.RoutingTableEntry e in Backend.DaemonBackEnd.Instance.RoutingTable)
+                {
+                    if (e.Node.NodeID != Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
+                    {
+                        count += e.Node.Users.Count;
+                        foreach (Entities.User u in e.Node.Users)
+                        {
+                            respones[0] += u.Nickname + " " + e.NextHop.ToString() + " " + e.Distance.ToString() + "\n";
+                        }
+                    }
+                }
+                              respones[0] = "Ok " + count.ToString() + "\n" + respones[0];
+                            return  Utilities.Responses.GetResponse(Utilities.ResponseCodes.UserTable_OK, respones);
+            }
+            else
+                return "ERROR";
 
         }
     }

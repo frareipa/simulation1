@@ -17,15 +17,8 @@ namespace RoutingDaemon1.ServerInterface.Commands
     public class USERTABLECommand : DaemonCommandBase
     {
             //Parameters: <username> <hostname> <servername> <realname>
-        public USERTABLECommand(string[] parameters) 
-        {
-            if (parameters.Length > 0)
-            {
-                this.NickName = parameters[0].Split('\0')[0];
-            }
-        }
+        public USERTABLECommand(string[] parameters){}
 
-        public string NickName { get; set; }
 
         public override string ExecuteCommand()
         {

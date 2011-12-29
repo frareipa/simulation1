@@ -25,7 +25,7 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
             {
                 REMOVEUSERCommand RemoveUserCommand = (REMOVEUSERCommand)command;
                 if (RemoveUserCommand.NickName == null)
-                    return "Error";
+                    return "ERROR";
                 User n=new User();
                 n.Nickname=RemoveUserCommand.NickName;
                 bool found = DaemonBackEnd.Instance.LocalNode.Users.Contains(n);
@@ -33,11 +33,11 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                 {
                     DaemonBackEnd.Instance.LocalNode.Users.Remove(n);
                 }
-                                return "ok";
+                                return "OK";
                    }
             else
             {
-                return "Error";
+                return "ERROR";
             }
 
         }
