@@ -25,13 +25,13 @@ namespace RoutingDaemon1.ServerInterface.Commands
             switch (type.Value)
             {
                 case DaemonCommandType.ADDUSER:
-                    throw new NotImplementedException();
+                    return new ADDUSERCommand(arguments.ToArray());
                 case DaemonCommandType.REMOVEUSER:
-                    throw new NotImplementedException();
+                    return new REMOVEUSERCommand(arguments.ToArray());
                 case DaemonCommandType.NEXTHOP:
-                    throw new NotImplementedException();
+                    return new NEXTHOPCommand(arguments.ToArray());
                 case DaemonCommandType.USERTABLE:
-                    throw new NotImplementedException();
+                    return new USERTABLECommand(arguments.ToArray());
                 default:
                     break;
             }
