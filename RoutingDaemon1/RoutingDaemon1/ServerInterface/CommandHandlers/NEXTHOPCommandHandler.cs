@@ -28,41 +28,21 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                 }
                 Entities.User U=new Entities.User();
                 U.Nickname=nextHopCommand.NickName;
-                //foreach(Entities.Node n in Backend.DaemonBackEnd.Instance.LocalNode.Neighbors)
-                //{
-                //    if(n.Users.Contains(U))
-                //    {
-                //        respones[0]=n.NodeID.ToString();
-                //        break;
-                //    }
-                //    foreach (Entities.Node nn in n.Neighbors)
-                //    {
-                //        if (!Backend.DaemonBackEnd.Instance.LocalNode.Neighbors.Contains(nn))
-                //        {
-                //            if (n.Users.Contains(U))
-                //            {
-                //                respones[0] = n.NodeID.ToString();
-                //                break;
-                //            }
-                //        }
-                //    }
-                //}
+                Backend.DaemonBackEnd.Instance.UpdateRoutingTable();
                             foreach(Entities.RoutingTableEntry e in Backend.DaemonBackEnd.Instance.RoutingTable)
                             {
                                 if(e.Node.Users.Contains(U))
                                 {
-                                    if(e.NextHop.NodeID!=Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
+                                    if (e.NextHop.NodeID != Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
                                     {
-                                        respones[0] = e.NextHop.ToString();
-                                    respones[1]=e.Distance.ToString();
-                                    return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK, respones);
-                        
-                                        break;
+                                        respones[0] = e.Node.NodeID.ToString();
+                                        respones[1] = e.Distance.ToString();
+                                        return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK, respones);
                                     }
 
                                 }
                             }
-                            return "ERROR";
+                            return null;
                       }
             else
                 return "ERROR";
