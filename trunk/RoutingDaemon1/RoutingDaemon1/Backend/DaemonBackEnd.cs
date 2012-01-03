@@ -117,7 +117,8 @@ namespace RoutingDaemon1.Backend
             }
             else
             {
-                //send my lsa
+                //send my lsa 
+                /**** leh dol bass  *****/
                 int index = allNodes.IndexOf(SenderNode);
                 lsa.Links = allNodes[index].Neighbors;
                 lsa.Users = allNodes[index].Users;
@@ -135,6 +136,7 @@ namespace RoutingDaemon1.Backend
         /// <param name="configuration">The configuration loaded from the configuration file.</param>
         public void ConfigureLocalNode(List<NodeConfiguration> configuration)
         {
+            allNodes.Add(LocalNode);
             //how can i know the local one is it the first one or WHAT?
             foreach (NodeConfiguration nc in configuration)
             {
@@ -146,8 +148,10 @@ namespace RoutingDaemon1.Backend
                 {
                     Node n = new Node();
                     n.NodeID = nc.NodeID;
+                    n.IsDown = false;
                     n.Configuration=nc;
                     this.LocalNode.Neighbors.Add(n);
+                    this.allNodes.Add(n);
                 }
             }
           //  throw new NotImplementedException();

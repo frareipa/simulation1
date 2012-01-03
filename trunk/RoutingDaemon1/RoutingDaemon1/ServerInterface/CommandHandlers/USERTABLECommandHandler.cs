@@ -23,6 +23,7 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                 int count = 0;
                 string []respones=new string[1];
                 respones[0] = "";
+                Backend.DaemonBackEnd.Instance.UpdateRoutingTable();
                               foreach(Entities.RoutingTableEntry e in Backend.DaemonBackEnd.Instance.RoutingTable)
                 {
                     if (e.Node.NodeID != Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
@@ -30,7 +31,7 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                         count += e.Node.Users.Count;
                         foreach (Entities.User u in e.Node.Users)
                         {
-                            respones[0] += u.Nickname + " " + e.NextHop.ToString() + " " + e.Distance.ToString() + "\n";
+                            respones[0] += u.Nickname + " " + e.Node.NodeID.ToString() + " " + e.Distance.ToString() + "\n";
                         }
                     }
                 }
