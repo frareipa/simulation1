@@ -105,7 +105,6 @@ namespace RoutingDaemon1.Backend
             Node SenderNode = GetNodeByID(lsa.SenderNodeID);
             if (lsa.SequenceNumber > SenderNode.LastSequenceNumber)
             {
-
                 int index = allNodes.IndexOf(SenderNode);
                 allNodes[index].Neighbors = lsa.Links;
                 allNodes[index].Users = lsa.Users;

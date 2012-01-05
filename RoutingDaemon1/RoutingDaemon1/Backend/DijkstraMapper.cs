@@ -131,7 +131,7 @@ namespace RoutingDaemon1.Backend
                     currentNode = previousNodes[currentNode];
                 }
 
-               // if (currentNode != i)
+               if (currentNode != i)
                     entry.NextHop = allNodes[currentNode];
 
                 routingTable.Add(entry);
