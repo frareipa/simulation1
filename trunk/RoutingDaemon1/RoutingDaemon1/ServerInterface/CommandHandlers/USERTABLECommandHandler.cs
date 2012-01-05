@@ -24,7 +24,7 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                 string []respones=new string[1];
                 respones[0] = "";
                 Backend.DaemonBackEnd.Instance.UpdateRoutingTable();
-                              foreach(Entities.RoutingTableEntry e in Backend.DaemonBackEnd.Instance.RoutingTable)
+              foreach(Entities.RoutingTableEntry e in Backend.DaemonBackEnd.Instance.RoutingTable)
                 {
                     if (e.Node.NodeID != Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
                     {

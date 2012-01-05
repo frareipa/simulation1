@@ -33,16 +33,29 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                             {
                                 if(e.Node.Users.Contains(U))
                                 {
+                                    if (e.NextHop == null)
+                                    {
+                                        if (e.Node.NodeID == Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
+                                        {
+                                            return "None";
+                                        }
+                                        else
+                                        {
+                                            respones[0] = e.Node.NodeID.ToString();
+                                            respones[1] = e.Distance.ToString();
+                                            return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK, respones);
+                                        }
+                                    }
                                     if (e.NextHop.NodeID != Backend.DaemonBackEnd.Instance.LocalNode.NodeID)
                                     {
-                                        respones[0] = e.Node.NodeID.ToString();
+                                        respones[0] = e.NextHop.NodeID.ToString();
                                         respones[1] = e.Distance.ToString();
                                         return Utilities.Responses.GetResponse(Utilities.ResponseCodes.NextHop_OK, respones);
                                     }
 
                                 }
                             }
-                            return null;
+                            return "None";
                       }
             else
                 return "ERROR";
