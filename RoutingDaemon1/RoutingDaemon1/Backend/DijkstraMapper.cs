@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using RoutingDaemon1.Entities;
 
-namespace RoutingDaemon1.Backend
+namespace RoutingDaemon.Backend
 {
     /// <summary>
     /// Network mapper using Dijkstra.
@@ -25,8 +25,8 @@ namespace RoutingDaemon1.Backend
         /// <param name="allNodes">All nodes.</param>
         public DijkstraMapper(IList<Node> allNodes)
         {
-            this.allNodes = allNodes;
-            int count = allNodes.Count;
+            this.allNodes = allNodes.Where(x => !x.IsDown).ToList();
+            int count = this.allNodes.Count;
 
             links = new int[count, count];
             currentNodes = new int[count];
@@ -131,8 +131,7 @@ namespace RoutingDaemon1.Backend
                     currentNode = previousNodes[currentNode];
                 }
 
-               if (currentNode != i)
-                    entry.NextHop = allNodes[currentNode];
+                entry.NextHop = allNodes[currentNode];
 
                 routingTable.Add(entry);
             }

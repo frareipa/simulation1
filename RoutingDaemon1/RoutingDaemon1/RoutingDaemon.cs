@@ -93,8 +93,6 @@ namespace RoutingDaemon1
             while (true)
             {
                 byte[] buffer = new byte[1024];
-                /****** important question port number************/
-                // EndPoint EP = new IPEndPoint(IPAddress.Any, 0);
                 EndPoint EP = new IPEndPoint(IPAddress.Any, 0);
                 try
                 {
@@ -102,14 +100,13 @@ namespace RoutingDaemon1
                 }
                 catch
                 {
-                    // return;
                     continue;
                 }
-                Console.WriteLine("LSA Deliver");
                 LSA lsa;
                 lsa = Utilities.LSAUtility.CreateLSAFromByteArray(buffer);
                 if (Backend.DaemonBackEnd.Instance.GetNodeByID(lsa.SenderNodeID).IsDown == true)
                 {
+                    Logger.Instance.Debug("LSA Deliver from down node");
                     Backend.DaemonBackEnd.Instance.GetNodeByID(lsa.SenderNodeID).IsDown = false;
                 }
 
@@ -118,29 +115,28 @@ namespace RoutingDaemon1
                     LSA newLsa = Backend.DaemonBackEnd.Instance.UpdateBackEndWithLSA(lsa);
                     if (newLsa == null)
                     {
-                        
-                        //flood the newLsa
+                        Logger.Instance.Debug("LSA Deliver new lsa advertisment");
                         daemonUDPSocket.SendTo(Utilities.LSAUtility.CreateAckLSAFromLSA(lsa), EP);
                         foreach (Node n in Backend.DaemonBackEnd.Instance.LocalNode.Neighbors)
                         {
                             if (!(n.IsDown) && n.NodeID != lsa.SenderNodeID)
                             {
-                                //  EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
                                 try
                                 {
                                     daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(lsa), n.Configuration.GetNodeEndPoint());
+                                   //n.IsAcknowledged = false;
                                 }
                                 catch
                                 {
                                     continue;
-                                    // return;
                                 }
                             }
                         }
 
                     }
-                    else if(newLsa!=null&&newLsa.SequenceNumber!=lsa.SequenceNumber)
+                    else if (newLsa != null)// && newLsa.SequenceNumber != lsa.SequenceNumber)
                     {
+                        Logger.Instance.Debug("LSA Deliver old number lsa");
                         try
                         {
                             daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(newLsa), EP);
@@ -148,27 +144,21 @@ namespace RoutingDaemon1
                         catch
                         {
                             continue;
-                            // return;
                         }
+                    }
+                    else
+                    {
+                        Logger.Instance.Debug("LSA Deliver same lsa number and i send ack");
+                       daemonUDPSocket.SendTo(Utilities.LSAUtility.CreateAckLSAFromLSA(newLsa), EP);
                     }
 
                 }
                 else if (lsa.Type == LSAType.Acknowledgement)
                 {
+                    Logger.Instance.Debug("LSA Deliver type acknowledgement");
                     Backend.DaemonBackEnd.Instance.GetNodeByID(lsa.SenderNodeID).IsAcknowledged = true;
-                    //foreach (Node n in Backend.DaemonBackEnd.Instance.LocalNode.Neighbors)
-                    //{
-                    //    //question
-                    //    if (lsa.SenderNodeID != n.NodeID)
-                    //    {
-                    //        Byte[] Ackbuffer =  Utilities.LSAUtility.CreateAckLSAFromLSA(lsa);
-                    //        EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
-                    //        daemonUDPSocket.SendTo(Ackbuffer, EPN);
-
-                    //    }
-                    //}               
+                    Backend.DaemonBackEnd.Instance.UpdateRoutingTable();
                 }
-                //Thread.Sleep(10000);
             }
         }
 
@@ -184,7 +174,6 @@ namespace RoutingDaemon1
                 LSA localLsa = Backend.DaemonBackEnd.Instance.GetLocalNodeLSA();
                 foreach (Node n in Backend.DaemonBackEnd.Instance.LocalNode.Neighbors)
                 {
-                    // must check if node is down and ack or not ?
                     if (!n.IsDown)
                     {
                         EndPoint EPN = n.Configuration.GetNodeEndPoint();
@@ -192,9 +181,9 @@ namespace RoutingDaemon1
                         try
                         {
                             daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), EPN);
-                            Console.WriteLine("i send broad cast to port" + n.Configuration.RoutingPort.ToString());
+                            Logger.Instance.Debug("i send new lsa to broad cast to port" + n.Configuration.RoutingPort.ToString());
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             continue;
                         }
@@ -202,9 +191,10 @@ namespace RoutingDaemon1
                         n.IsAcknowledged = false;
                     }
                     //wait for ack
-                    Thread WaitForAckThread = new Thread(new ThreadStart(this.WaitForAck));
-                    WaitForAckThread.Start();
                 }
+
+                Thread WaitForAckThread = new Thread(new ThreadStart(this.WaitForAck));
+                WaitForAckThread.Start();
             }
             //throw new NotImplementedException();
         }
@@ -235,6 +225,7 @@ namespace RoutingDaemon1
                         // EndPoint EPN = new IPEndPoint(IPAddress.Any, n.Configuration.RoutingPort);
                         try
                         {
+                            Logger.Instance.Debug("not reseive ack i send lsa again");
                             daemonUDPSocket.SendTo(Utilities.LSAUtility.GetByteArrayFromLSA(localLsa), n.Configuration.GetNodeEndPoint());
                         }
                         catch
@@ -243,12 +234,6 @@ namespace RoutingDaemon1
                         }
 
                         n.IsAcknowledged = false;
-
-                        //wait for ack
-                        /*****what true ?****/
-                        //Thread.Sleep(RetransmissionTimeout);
-                        //Thread WaitForAckThread = new Thread(new ThreadStart(this.WaitForAck));
-                        //WaitForAckThread.Start();
                     }
                 }
                 if (allAkc)
@@ -268,14 +253,14 @@ namespace RoutingDaemon1
                 Thread.Sleep(NeighborTimeout);
                 foreach (Node n in Backend.DaemonBackEnd.Instance.LocalNode.Neighbors)
                 {
-                    if (DateTime.Now.Subtract(n.LastUpdateTime).TotalMilliseconds > NeighborTimeout && !n.IsDown)
+                    if (DateTime.Now.Subtract(n.LastUpdateTime).TotalMilliseconds >= NeighborTimeout && !n.IsDown)
                     {
                         n.IsDown = true;
                         Backend.DaemonBackEnd.Instance.UpdateRoutingTable();
+                        Logger.Instance.Debug("node number " + n.NodeID.ToString() + " is down ");
                     }
                 }
             }
-            //throw new NotImplementedException();
         }
     }
 }

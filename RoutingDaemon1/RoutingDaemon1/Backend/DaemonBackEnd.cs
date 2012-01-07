@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RoutingDaemon1.Entities;
 using IRC.Utilities.Entities;
+using RoutingDaemon.Backend;
 
 namespace RoutingDaemon1.Backend
 {
@@ -122,8 +123,10 @@ namespace RoutingDaemon1.Backend
                 lsa.Links = allNodes[index].Neighbors;
                 lsa.Users = allNodes[index].Users;
                 lsa.SequenceNumber = allNodes[index].LastSequenceNumber;
-                
-
+                lsa.SenderNodeID = this.allNodes[index].NodeID;
+                lsa.Type = LSAType.Advertisement;
+                lsa.Version = 1;
+                lsa.TTL = 32;
                 return lsa;
             }
       
@@ -147,7 +150,6 @@ namespace RoutingDaemon1.Backend
                 {
                     Node n = new Node();
                     n.NodeID = nc.NodeID;
-                    n.IsDown = false;
                     n.Configuration=nc;
                     this.LocalNode.Neighbors.Add(n);
                     this.allNodes.Add(n);
