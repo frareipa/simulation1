@@ -31,11 +31,18 @@ namespace RoutingDaemon1.ServerInterface.CommandHandlers
                         count += e.Node.Users.Count;
                         foreach (Entities.User u in e.Node.Users)
                         {
-                            respones[0] += u.Nickname + " " + e.Node.NodeID.ToString() + " " + e.Distance.ToString() + "\n";
+                            if (e.NextHop == null)
+                            {
+                                respones[0] += u.Nickname + " " + e.Node.NodeID.ToString() + " " + e.Distance.ToString() + "\n";
+                            }
+                            else
+                            {
+                                respones[0] += u.Nickname + " " + e.NextHop.NodeID.ToString() + " " + e.Distance.ToString() + "\n";
+                            }
                         }
                     }
                 }
-                              respones[0] = "Ok " + count.ToString() + "\n" + respones[0];
+                              respones[0] =  count.ToString() + "\n" + respones[0];
                             return  Utilities.Responses.GetResponse(Utilities.ResponseCodes.UserTable_OK, respones);
             }
             else
